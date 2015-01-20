@@ -27,6 +27,8 @@ RUN rm -rf /var/www/html
 ADD http://ftp.mozilla.org/pub/mozilla.org/webtools/bugzilla-4.2.11.tar.gz /tmp/
 RUN tar -xvf /tmp/bugzilla-4.2.11.tar.gz -C /var/www/
 RUN ln -s /var/www/bugzilla-4.2.11 /var/www/html
+ADD bugzilla.conf /etc/apache2/sites-available/
+RUN a2ensite bugzilla
 # RUN 
 
 
