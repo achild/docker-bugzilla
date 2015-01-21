@@ -1,12 +1,13 @@
 
 #!/bin/sh
 # Set up bugzilla and run apache2
-DEFAULT_MYSQL_HOST=172.17.42.1
+DEFAULT_MYSQL_HOST=Amer-Childs-MBP
 DEFAULT_MYSQL_PORT=0
 DEFAULT_MYSQL_DB=bugs
 DEFAULT_MYSQL_USER=root
 DEFAULT_MYSQL_PWD=
-cd /opt/bugzilla
+cd /var/www/bugzilla
+
 # Substitute values into bugzilla localconfig
 sed --in-place -f - localconfig <<SED
 s/db_host *= *'[a-zA-Z0-9.]\+'/db_host = '${MYSQL_HOST:-$DEFAULT_MYSQL_HOST}'/
@@ -15,8 +16,10 @@ s/db_name *= *'[a-zA-Z0-9.]\+'/db_name = '${MYSQL_DB:-$DEFAULT_MYSQL_DB}'/
 s/db_user *= *'[a-zA-Z0-9.]\+'/db_user = '${MYSQL_USER:-$DEFAULT_MYSQL_USER}'/
 s/db_pass *= *'[a-zA-Z0-9.]\+'/db_pass = '${MYSQL_PWD:-$DEFAULT_MYSQL_PWD}'/
 SED
+
 # Verify bugzilla setup
 ./checksetup.pl
+
 # Start apache2
 . /etc/apache2/envvars
 /usr/sbin/apache2 -D FOREGROUND
