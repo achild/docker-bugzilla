@@ -6,7 +6,7 @@ DEFAULT_MYSQL_PORT=0
 DEFAULT_MYSQL_DB=bugs
 DEFAULT_MYSQL_USER=root
 DEFAULT_MYSQL_PWD=
-cd /var/www/bugzilla
+cd /var/www/html
 
 # Substitute values into bugzilla localconfig
 sed --in-place -f - localconfig <<SED
