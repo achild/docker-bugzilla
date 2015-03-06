@@ -19,7 +19,7 @@ RUN apt-get update && \
 	libencode-detect-perl libmodule-build-perl libnet-ldap-perl libauthen-sasl-perl \
 	libtemplate-perl-doc libfile-mimeinfo-perl libhtml-formattext-withlinks-perl \
 	libgd-dev lynx-cur graphviz python-sphinx patch && \
-	rm -rf /var/lib/apt/lists/* && /usr/bin/perl install-module.pl Email::Send 
+	rm -rf /var/lib/apt/lists/* 
 
 # Remove DEFAULT apache site
 RUN rm -rf /var/www/html
@@ -35,6 +35,8 @@ WORKDIR /var/www/html
 RUN rm -f /etc/msmtprc
 
 # Verifying all bugzilla modules are installed and running checksetup.pl
+RUN /usr/bin/perl install-module.pl Email::Send && \
+    /usr/bin/perl install-module.pl File::Spec
 RUN ./install-module.pl --all
 #RUN ./checksetup.pl
 
