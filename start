@@ -18,6 +18,9 @@ cd /var/www/html
 #s/^\$db_pass\s*=\s*.*$/\$db_pass = '${MYSQL_PWD:-$DEFAULT_MYSQL_PWD}';/
 #SED
 
+# Remove voting disable file
+rm -f extensions/Voting/disabled
+
 # Verify bugzilla setup
 ./checksetup.pl
 
@@ -31,6 +34,9 @@ chmod a-w data/params
 
 # Change ownership
 chown -R www-data:www-data .
+
+# Remove stall pid file
+rm -f /var/run/apache2/apache2.pid
 
 # Start apache2
 . /etc/apache2/envvars
