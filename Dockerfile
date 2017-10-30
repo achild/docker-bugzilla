@@ -1,4 +1,4 @@
-FROM ubuntu:trusty
+FROM ubuntu:xenial
 MAINTAINER Chris Hardekopf <chrish@basis.com>
 
 # Update and install modules for bugzilla, Apache2
@@ -11,7 +11,7 @@ RUN apt-get update && \
 	libappconfig-perl libdate-calc-perl libtemplate-perl libmime-perl build-essential \
 	libdatetime-timezone-perl libdatetime-perl libemail-sender-perl libemail-mime-perl \
 	libemail-mime-modifier-perl libdbi-perl libdbd-mysql-perl libcgi-pm-perl \
-	libmath-random-isaac-perl libmath-random-isaac-xs-perl apache2-mpm-prefork \
+	libmath-random-isaac-perl libmath-random-isaac-xs-perl \
 	libapache2-mod-perl2 libapache2-mod-perl2-dev libchart-perl libxml-perl \
 	libxml-twig-perl perlmagick libgd-graph-perl libtemplate-plugin-gd-perl \
 	libsoap-lite-perl libhtml-scrubber-perl libjson-rpc-perl libdaemon-generic-perl \
@@ -25,7 +25,7 @@ RUN apt-get update && \
 RUN rm -rf /var/www/html
 
 # Make Bugzilla install Directory
-ENV VERSION 4.4.12
+ENV VERSION 5.0.3
 ADD https://ftp.mozilla.org/pub/mozilla.org/webtools/bugzilla-$VERSION.tar.gz /tmp/
 RUN tar -xvf /tmp/bugzilla-$VERSION.tar.gz -C /var/www/
 RUN ln -s /var/www/bugzilla-$VERSION /var/www/html
