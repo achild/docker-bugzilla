@@ -42,7 +42,7 @@ RUN ./install-module.pl --all
 #RUN ./checksetup.pl
 
 # Enable CGI and Disable default apache site
-RUN a2enmod cgi headers expires && a2ensite bugzilla && a2dissite 000-default
+RUN a2enmod cgi headers expires rewrite && a2ensite bugzilla && a2dissite 000-default
 
 # Add the start script
 ADD start /opt/
