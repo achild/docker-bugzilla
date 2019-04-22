@@ -22,14 +22,17 @@ RUN apt-get update && \
 	rm -rf /var/lib/apt/lists/* 
 
 # Remove DEFAULT apache site
-RUN rm -rf /var/www/html
+# RUN rm -rf /var/www/html
 
 # Make Bugzilla install Directory
 ENV VERSION 5.0.6
 ADD https://ftp.mozilla.org/pub/mozilla.org/webtools/bugzilla-$VERSION.tar.gz /tmp/
-RUN nkdir -p /var/bugzilla
+RUN mkdir -p /var/bugzilla
 RUN tar -xvf /tmp/bugzilla-$VERSION.tar.gz -C /var/bugzilla
-RUN ln -s /var/bugzilla/bugzilla-$VERSION /var/www/html
+RUN cp -rf /var/bugzilla/bugzilla-$VERSION/* /var/www/html/
+
+# RUN ln -s /var/bugzilla/bugzilla-$VERSION /var/www/html
+
 ADD bugzilla.conf /etc/apache2/sites-available/
 WORKDIR /var/www/html
 
