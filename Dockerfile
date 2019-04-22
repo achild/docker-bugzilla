@@ -27,10 +27,8 @@ RUN rm -rf /var/www/html
 # Make Bugzilla install Directory
 ENV VERSION 5.0.6
 ADD https://ftp.mozilla.org/pub/mozilla.org/webtools/bugzilla-$VERSION.tar.gz /tmp/
-#RUN tar -xvf /tmp/bugzilla-$VERSION.tar.gz -C /var/www/
-#RUN ln -s /var/www/bugzilla-$VERSION /var/www/html
-RUN tar -xvf /tmp/bugzilla-$VERSION.tar.gz -C /var/www/bugzilla
-RUN ln -s /var/www/bugzilla /var/www/html
+RUN tar -xvf /tmp/bugzilla-$VERSION.tar.gz -C /var/bugzilla/
+RUN ln -s /var/bugzilla/bugzilla-$VERSION /var/www/html
 ADD bugzilla.conf /etc/apache2/sites-available/
 WORKDIR /var/www/html
 
