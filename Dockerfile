@@ -25,7 +25,7 @@ RUN apt-get update && \
 RUN rm -rf /var/www/html
 
 # Make Bugzilla install Directory
-ENV VERSION 5.0.4
+ENV VERSION 5.0.6
 ADD https://ftp.mozilla.org/pub/mozilla.org/webtools/bugzilla-$VERSION.tar.gz /tmp/
 RUN tar -xvf /tmp/bugzilla-$VERSION.tar.gz -C /var/www/
 RUN ln -s /var/www/bugzilla-$VERSION /var/www/html
