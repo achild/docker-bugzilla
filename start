@@ -25,12 +25,12 @@ rm -f extensions/Voting/disabled
 ./checksetup.pl
 
 # Copy existing params to new bugzilla installation
-cp /opt/data/params data/
+cp /opt/data/params* data/
 
 # Copy new params file to persistant location
 # change permissions to RO
-cp data/params /opt/data/
-chmod a-w data/params
+cp data/params* /opt/data/
+chmod a-w data/params*
 
 # Change ownership
 chown -R www-data:www-data .

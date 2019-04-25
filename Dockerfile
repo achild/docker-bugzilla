@@ -1,5 +1,5 @@
-FROM ubuntu:trusty
-MAINTAINER Amer Child <achild@basis.com>
+FROM ubuntu:xenial
+MAINTAINER Chris Hardekopf <chrish@basis.com>
 
 # Update and install modules for bugzilla, Apache2
 RUN apt-get update && \
@@ -11,7 +11,7 @@ RUN apt-get update && \
 	libappconfig-perl libdate-calc-perl libtemplate-perl libmime-perl build-essential \
 	libdatetime-timezone-perl libdatetime-perl libemail-sender-perl libemail-mime-perl \
 	libemail-mime-modifier-perl libdbi-perl libdbd-mysql-perl libcgi-pm-perl \
-	libmath-random-isaac-perl libmath-random-isaac-xs-perl apache2-mpm-prefork \
+	libmath-random-isaac-perl libmath-random-isaac-xs-perl \
 	libapache2-mod-perl2 libapache2-mod-perl2-dev libchart-perl libxml-perl \
 	libxml-twig-perl perlmagick libgd-graph-perl libtemplate-plugin-gd-perl \
 	libsoap-lite-perl libhtml-scrubber-perl libjson-rpc-perl libdaemon-generic-perl \
@@ -22,12 +22,17 @@ RUN apt-get update && \
 	rm -rf /var/lib/apt/lists/* 
 
 # Remove DEFAULT apache site
-RUN rm -rf /var/www/html
+# RUN rm -rf /var/www/html
 
 # Make Bugzilla install Directory
-ADD https://ftp.mozilla.org/pub/mozilla.org/webtools/bugzilla-4.4.8.tar.gz /tmp/
-RUN tar -xvf /tmp/bugzilla-4.4.8.tar.gz -C /var/www/
-RUN ln -s /var/www/bugzilla-4.4.8 /var/www/html
+ENV VERSION 5.0.6
+ADD https://ftp.mozilla.org/pub/mozilla.org/webtools/bugzilla-$VERSION.tar.gz /tmp/
+RUN mkdir -p /var/bugzilla
+RUN tar -xvf /tmp/bugzilla-$VERSION.tar.gz -C /var/bugzilla
+RUN cp -rf /var/bugzilla/bugzilla-$VERSION/* /var/www/html/
+
+# RUN ln -s /var/bugzilla/bugzilla-$VERSION /var/www/html
+
 ADD bugzilla.conf /etc/apache2/sites-available/
 WORKDIR /var/www/html
 
@@ -41,7 +46,7 @@ RUN ./install-module.pl --all
 #RUN ./checksetup.pl
 
 # Enable CGI and Disable default apache site
-RUN a2enmod cgi headers expires && a2ensite bugzilla && a2dissite 000-default
+RUN a2enmod cgi headers expires rewrite && a2ensite bugzilla && a2dissite 000-default
 
 # Add the start script
 ADD start /opt/
